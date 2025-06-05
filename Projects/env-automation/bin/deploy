@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# ====== Configurable Variables ======
+STACK_NAME="exp-net-vpc-stack"
+TEMPLATE_FILE="template.yaml"  # Path to your YAML file
+REGION="eu-west-2"                # London region
+AZ="eu-west-2a"                   # Availability Zone in London
+
+# ====== Deploy the Stack ======
+echo "Deploying CloudFormation stack: $STACK_NAME in $REGION..."
+
+aws cloudformation deploy \
+  --stack-name "$STACK_NAME" \
+  --template-file "$TEMPLATE_FILE" \
+  --region "$REGION" \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --parameter-overrides \
+    AvailabilityZone="$AZ"
+
+# ====== Output Stack Status ======
+echo "Fetching stack status..."
+aws cloudformation describe-stacks \
+  --stack-name "$STACK_NAME" \
+  --region "$REGION" \
+  --query "Stacks[0].StackStatus" \
+  --output text
