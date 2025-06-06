@@ -1,7 +1,7 @@
 ## How to Deploy
 
 ```sh
-cd projects/env-automation
+cd git
 chmod u+x ./bin/deploy
 ./bin/deploy
 ```
